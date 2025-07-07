@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Forecast Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #2e86de;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1e6ab8;
+        }
+
+        .error {
+            text-align: center;
+            color: red;
+            font-weight: bold;
+        }
+
+        .chart-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        img {
+            max-width: 90%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 80%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #2e86de;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #eef;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌤️ Weather Forecast</h1>
+
+    <form method="POST">
+        <input type="text" name="city" placeholder="Enter city name" required>
+        <button type="submit">Get Forecast</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if image_file %}
+        <div class="chart-container">
+            <h2>Temperature Chart</h2>
+            <img src="{{ image_file }}" alt="Temperature Chart">
+        </div>
+
+        <h2 style="text-align:center;">Weather Forecast (12 PM Daily)</h2>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Temperature (°C)</th>
+                <th>Weather</th>
+            </tr>
+            {% for day in forecast_data %}
+            <tr>
+                <td>{{ day.date }}</td>
+                <td>{{ day.temp }}</td>
+                <td>{{ day.desc }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+</body>
+</html>
